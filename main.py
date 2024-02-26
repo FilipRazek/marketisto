@@ -1,20 +1,14 @@
 import requests
 import matplotlib.pyplot as plt
 
-from date_utils import add_years, is_in_future
+from utils.date import add_years, is_in_future
+from utils.url import build_url
 from eod import EndOfDay
 
 symbol = "AAPL"
 api_key = "demo"
 
 URL_BASE = "https://api.twelvedata.com/"
-
-
-def build_url(base, endpoint, params):
-    url = base + endpoint + "?"
-    for key, value in params.items():
-        url += key + "=" + value + "&"
-    return url
 
 
 def get_earliest_timestamp(symbol):
