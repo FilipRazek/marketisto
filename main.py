@@ -1,8 +1,9 @@
+import sys
 from prettytable import PrettyTable
 
 from util import get_summary
 
-symbol = "AAPL"
+symbols = [symbol.upper() for symbol in sys.argv[1:]]
 
 
 def build_summary_table(symbols):
@@ -18,4 +19,4 @@ def build_summary_table(symbols):
     return table
 
 
-print(build_summary_table([symbol, symbol, symbol]))
+print(build_summary_table(symbols))
