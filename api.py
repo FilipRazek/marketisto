@@ -13,7 +13,12 @@ def get_earliest_timestamp(symbol, api_key):
         {"symbol": symbol, "apikey": api_key, "interval": "1day"},
     )
     response = requests.get(url).json()
-    return response["datetime"]
+    try:
+        return response["datetime"]
+    except Exception as e:
+        print(symbol)
+        print(response)
+        raise e
 
 
 def get_time_series_between_dates(symbol, start_date, end_date, api_key):
