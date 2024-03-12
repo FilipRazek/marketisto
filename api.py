@@ -44,8 +44,7 @@ def get_time_series_between_dates(symbol, start_date, end_date):
         raise e
 
 
-def get_time_series(symbol):
-    start_date = get_earliest_timestamp(symbol)
+def get_time_series(symbol, start_date):
     MAX_YEARS = 18
     values = []
     running = True
