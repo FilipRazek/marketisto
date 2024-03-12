@@ -1,4 +1,5 @@
 from api import get_time_series, get_earliest_timestamp
+from prettytable import PrettyTable
 
 
 def get_daily_variations(time_series):
@@ -29,3 +30,17 @@ def get_summary(symbol):
         f"${time_series[-1].value}",
         yearly_variation,
     ]
+
+
+def build_summary_table(symbols):
+    table = PrettyTable()
+    table.field_names = [
+        "Symbol",
+        "Start Date",
+        "Start Price",
+        "End Price",
+        "Yearly Variation",
+    ]
+    table.add_rows([get_summary(symbol) for symbol in symbols])
+    return table
+
