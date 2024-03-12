@@ -3,11 +3,10 @@ from utils.url import build_url
 from eod import EndOfDay
 from utils.date import add_years, is_in_future
 
-api_key = "demo"
 URL_BASE = "https://api.twelvedata.com/"
 
 
-def get_earliest_timestamp(symbol):
+def get_earliest_timestamp(symbol, api_key):
     url = build_url(
         URL_BASE,
         "earliest_timestamp",
@@ -17,7 +16,7 @@ def get_earliest_timestamp(symbol):
     return response["datetime"]
 
 
-def get_time_series_between_dates(symbol, start_date, end_date):
+def get_time_series_between_dates(symbol, start_date, end_date, api_key):
     params = {
         "symbol": symbol,
         "apikey": api_key,
@@ -44,7 +43,7 @@ def get_time_series_between_dates(symbol, start_date, end_date):
         raise e
 
 
-def get_time_series(symbol, start_date):
+def get_time_series(symbol, start_date, api_key):
     MAX_YEARS = 18
     values = []
     running = True
@@ -54,7 +53,7 @@ def get_time_series(symbol, start_date):
             end_date = None
             running = False
         new_values = get_time_series_between_dates(
-            symbol, start_date, end_date)
+            symbol, start_date, end_date, api_key)
         values.extend(new_values)
         start_date = end_date
     return values

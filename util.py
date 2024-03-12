@@ -19,9 +19,9 @@ def get_expected_yearly_variation(time_series):
     return total_growth ** (365 / len(daily_variations)) - 1
 
 
-def get_summary(symbol):
-    start_date = get_earliest_timestamp(symbol)
-    time_series = get_time_series(symbol, start_date)
+def get_summary(symbol, api_key):
+    start_date = get_earliest_timestamp(symbol, api_key)
+    time_series = get_time_series(symbol, start_date, api_key)
     yearly_variation = f"{100 * get_expected_yearly_variation(time_series):.2f}%"
     return [
         symbol,
@@ -32,7 +32,7 @@ def get_summary(symbol):
     ]
 
 
-def build_summary_table(symbols):
+def build_summary_table(symbols, api_key):
     table = PrettyTable()
     table.field_names = [
         "Symbol",
@@ -41,6 +41,5 @@ def build_summary_table(symbols):
         "End Price",
         "Yearly Variation",
     ]
-    table.add_rows([get_summary(symbol) for symbol in symbols])
+    table.add_rows([get_summary(symbol, api_key) for symbol in symbols])
     return table
-
