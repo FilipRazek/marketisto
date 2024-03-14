@@ -1,12 +1,22 @@
 import requests
-from utils.url import build_url
+import redis
 from eod import EndOfDay
 from utils.date import add_years, is_in_future
+from utils.url import build_url
 
 URL_BASE = "https://api.twelvedata.com/"
 
+r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+
+def cache_response(endpoint, key, response):
+    r.hset(endpoint, key, response)
+
+def get_cached_response(endpoint, key):
+    return r.hget(endpoint, key)
+
 
 def get_earliest_timestamp(symbol, api_key):
+    cached = get_cached_response("earliest_timestamp", symbol)
     url = build_url(
         URL_BASE,
         "earliest_timestamp",
@@ -14,7 +24,9 @@ def get_earliest_timestamp(symbol, api_key):
     )
     response = requests.get(url).json()
     try:
-        return response["datetime"]
+        result = response["datetime"]
+        cache_response("earliest_timestamp", symbol, result)
+        return result
     except Exception as e:
         print(symbol)
         print(response)
