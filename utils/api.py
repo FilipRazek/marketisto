@@ -1,6 +1,6 @@
 import requests
 import redis
-from eod import EndOfDay
+from utils.eod import EndOfDay
 from utils.date import add_years, is_in_future
 from utils.url import build_url
 
