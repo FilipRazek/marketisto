@@ -1,5 +1,5 @@
 import sys
-from util import build_summary_table
+from utils.summary import build_summary_table
 
 api_key = sys.argv[1]
 symbols = [symbol.upper() for symbol in sys.argv[2:]]

@@ -1,4 +1,4 @@
-from api import get_time_series, get_earliest_timestamp
+from utils.api import get_time_series, get_earliest_timestamp
 from prettytable import PrettyTable
 
 
